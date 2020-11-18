@@ -1,23 +1,75 @@
 ---
-title: 'Part 2: Basic Inferential Data Analysis Instructions'
+title: 'Analysis of ToothGrowth data in R datasets package'
 author: "Erwin Lo"
-date: "11/18/2020"
-output: html_document
+output: pdf_document
 ---
 
-Now in the second portion of the project, we're going to analyze the ToothGrowth data in the R datasets package.
+We're going to analyse the ToothGrowth data in the R datasets package.
 
-Load the ToothGrowth data and perform some basic exploratory data analyses
+### 1. Load the ToothGrowth data and perform some basic exploratory data analyses
 
 ```{r}
 data(ToothGrowth)
 str(ToothGrowth)
 ```
-Provide a basic summary of the data.
+Break down the number of observations by supp and dose.
+```{r}
+table(ToothGrowth$supp, ToothGrowth$dose)
+```
+
+### 2. Provide a basic summary of the data.
 
 ```{r}
 summary(ToothGrowth)
 ```
 
-Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
-State your conclusions and the assumptions needed for your conclusions.
+### 3. Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+
+Display data in graphical form
+```{r}
+library(ggplot2)
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) +
+     geom_boxplot() +
+     facet_wrap(. ~ dose) +
+     labs(title = "Effect of Supplement and Dosage on Tooth Length",
+          x="Supplement", y="Tooth Length") +
+     theme(legend.position = "none")
+```
+
+Let's split data into different supplements.
+```{r}
+oj <- subset(ToothGrowth, supp == "OJ")
+vc <- subset(ToothGrowth, supp == "VC")
+```
+
+We shall now do hypothesis tests to compare tooth growth by supp and dose.  
+**Dose = 0.5**
+```{r}
+oj1 <- subset(oj, dose == 0.5)
+vc1 <- subset(vc, dose == 0.5)
+t.test(oj1$len - vc1$len)
+```
+p-value is less than 0.02 and confidence interval is above 0. The effect of the two supplements is different and significant at dose 0.5.
+
+**Dose = 1.0**
+```{r}
+oj2 <- subset(oj, dose == 1.0)
+vc2 <- subset(vc, dose == 1.0)
+t.test(oj2$len - vc2$len)
+```
+p-value is less than 0.01 and confidence interval is above 0. The effect of the two supplements is different and significant at dose 1.0.
+
+
+**Dose = 2.0**
+```{r}
+oj3 <- subset(oj, dose == 2.0)
+vc3 <- subset(vc, dose == 2.0)
+t.test(oj3$len - vc3$len)
+```
+p-value is more than 0.9 and confidence interval is below 0. We can't say that one supplement has more effect than the other.
+
+
+### 4. State your conclusions and the assumptions needed for your conclusions.
+1. From the boxplot above, we can see that as dosage increases tooth length increases as well. Higher dosage results in longer tooth length.
+2. For dosage of 0.5 and 1.0, supplement OJ will result in longer tooth length compared to supplement VC.
+3. For dosage of 2.0, there is no difference in effect from either supplements.
