@@ -63,11 +63,12 @@ distribution line.
 ```{r}
 library(ggplot2)
 ggplot(data.frame(means), aes(x = means)) + 
-     geom_histogram(binwidth = lambda, fill = "orange", color = "black", aes(y = ..density..)) +
-     stat_function(fun = dnorm, args = list(mean = theo_mean, sd = sqrt(theo_var)), size = 2, color = "black") +
+     geom_histogram(binwidth = lambda, fill = "orange", color = "black", 
+                    aes(y = ..density..)) +
+     stat_function(fun = dnorm, args = list(mean = theo_mean, sd = sqrt(theo_var)), 
+                   size = 2, color = "black") +
      labs(title = "Distribution of Simulated Averages",
-          x = "Simulated Averages",
-          y = "Density")
+          x = "Simulated Averages", y = "Density")
 ```
 
 From the chart, we can tell that the histogram of simulated averages is approximately normal.
