@@ -1,0 +1,23 @@
+---
+title: 'Part 2: Basic Inferential Data Analysis Instructions'
+author: "Erwin Lo"
+date: "11/18/2020"
+output: html_document
+---
+
+Now in the second portion of the project, we're going to analyze the ToothGrowth data in the R datasets package.
+
+Load the ToothGrowth data and perform some basic exploratory data analyses
+
+```{r}
+data(ToothGrowth)
+str(ToothGrowth)
+```
+Provide a basic summary of the data.
+
+```{r}
+summary(ToothGrowth)
+```
+
+Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+State your conclusions and the assumptions needed for your conclusions.
